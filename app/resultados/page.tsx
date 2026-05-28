@@ -184,7 +184,7 @@ export default function ResultadosPage() {
               type="date"
               className="border-2 border-gray-300 rounded-2xl px-5 py-3 text-gray-900 font-bold bg-white focus:outline-none focus:border-green-700"
               value={fechaSeleccionada}
-              max={fechaColombia(0)}
+              min={fechaColombia(0)}
               onChange={(e) => setFechaSeleccionada(e.target.value)}
             />
           </div>
