@@ -27,51 +27,25 @@ export default function PosicionesPage() {
   }, [])
 
   async function cargarPosiciones() {
-    setCargando(true)
-    setMensaje('')
+  setCargando(true)
+  setMensaje('')
 
-    const { data, error } = await supabase
-      .from('pronosticos')
-      .select(`
-        puntos,
-        usuario:usuarios!pronosticos_usuario_id_fkey(
-          id,
-          nombre
-        )
-      `)
+  const { data, error } = await supabase
+    .from('vista_posiciones')
+    .select('id, nombre, puntos')
+    .order('puntos', { ascending: false })
+    .order('nombre', { ascending: true })
+    .limit(20)
 
-    if (error) {
-      setMensaje(error.message)
-      setCargando(false)
-      return
-    }
-
-    const acumulado: any = {}
-
-    ;(data || []).forEach((p: any) => {
-      const id = p.usuario?.id
-      const nombre = p.usuario?.nombre || 'Usuario sin nombre'
-
-      if (!id) return
-
-      if (!acumulado[id]) {
-        acumulado[id] = {
-          id,
-          nombre,
-          puntos: 0,
-        }
-      }
-
-      acumulado[id].puntos += p.puntos ?? 0
-    })
-
-    const tabla = Object.values(acumulado).sort(
-      (a: any, b: any) => b.puntos - a.puntos
-    )
-
-    setPosiciones(tabla)
+  if (error) {
+    setMensaje(error.message)
     setCargando(false)
+    return
   }
+
+  setPosiciones(data || [])
+  setCargando(false)
+}
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-green-900 via-green-700 to-yellow-400 p-6 text-gray-900">
