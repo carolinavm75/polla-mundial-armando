@@ -26,7 +26,7 @@ export default function PosicionesPage() {
     cargarPosiciones()
   }, [])
 
-  async function cargarPosiciones() {
+ async function cargarPosiciones() {
   setCargando(true)
   setMensaje('')
 
@@ -35,7 +35,7 @@ export default function PosicionesPage() {
     .select('id, nombre, puntos')
     .order('puntos', { ascending: false })
     .order('nombre', { ascending: true })
-    .limit(20)
+    .limit(100)
 
   if (error) {
     setMensaje(error.message)
