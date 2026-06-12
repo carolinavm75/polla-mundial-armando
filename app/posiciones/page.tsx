@@ -14,7 +14,7 @@ function iconoPosicion(posicion: number) {
   if (posicion === 1) return '🥇'
   if (posicion === 2) return '🥈'
   if (posicion === 3) return '🥉'
-  return `#${posicion}`
+  return `${posicion}`
 }
 
 export default function PosicionesPage() {
@@ -26,31 +26,31 @@ export default function PosicionesPage() {
     cargarPosiciones()
   }, [])
 
- async function cargarPosiciones() {
-  setCargando(true)
-  setMensaje('')
+  async function cargarPosiciones() {
+    setCargando(true)
+    setMensaje('')
 
-  const { data, error } = await supabase
-    .from('vista_posiciones')
-    .select('id, nombre, puntos')
-    .order('puntos', { ascending: false })
-    .order('nombre', { ascending: true })
-    .limit(100)
+    const { data, error } = await supabase
+      .from('vista_posiciones')
+      .select('id, nombre, puntos')
+      .order('puntos', { ascending: false })
+      .order('nombre', { ascending: true })
+      .limit(100)
 
-  if (error) {
-    setMensaje(error.message)
+    if (error) {
+      setMensaje(error.message)
+      setCargando(false)
+      return
+    }
+
+    setPosiciones(data || [])
     setCargando(false)
-    return
   }
 
-  setPosiciones(data || [])
-  setCargando(false)
-}
-
   return (
-    <main className="min-h-screen bg-gradient-to-br from-green-900 via-green-700 to-yellow-400 p-6 text-gray-900">
+    <main className="min-h-screen bg-gradient-to-br from-green-900 via-green-700 to-yellow-400 p-4 sm:p-6 text-gray-900">
       <div className="max-w-6xl mx-auto">
-        <header className="bg-white rounded-[2rem] shadow-2xl border-4 border-yellow-400 p-6 mb-6">
+        <header className="bg-white rounded-[2rem] shadow-2xl border-4 border-yellow-400 p-5 sm:p-6 mb-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <div className="text-4xl mb-2">🏆📊</div>
@@ -92,7 +92,7 @@ export default function PosicionesPage() {
         )}
 
         {!cargando && posiciones.length > 0 && (
-          <section className="bg-white rounded-3xl shadow-xl p-5">
+          <section className="bg-white rounded-3xl shadow-xl p-4 sm:p-5">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
               <div>
                 <h2 className="text-2xl font-black text-green-800">
@@ -100,7 +100,7 @@ export default function PosicionesPage() {
                 </h2>
 
                 <p className="text-gray-700">
-                  Las primeras tres posiciones están en zona de premiación
+                  Las primeras tres posiciones están en zona de premiación.
                 </p>
               </div>
 
@@ -116,33 +116,32 @@ export default function PosicionesPage() {
                 return (
                   <div
                     key={usuario.id}
-                    className={`border-l-8 rounded-3xl p-5 shadow-md ${colorFila(
+                    className={`border-l-8 rounded-3xl p-4 sm:p-5 shadow-md overflow-hidden ${colorFila(
                       posicion
                     )}`}
                   >
-                   <div className="grid grid-cols-[55px_1fr_75px] sm:grid-cols-[90px_1fr_140px] gap-3 items-center">
-  <p className="text-xl sm:text-3xl font-black text-center">
-    {iconoPosicion(posicion)}
-  </p>
+                    <div className="grid grid-cols-[45px_1fr_58px] sm:grid-cols-[90px_1fr_140px] gap-3 sm:gap-4 items-center">
+                      <p className="text-lg sm:text-3xl font-black text-center text-green-900">
+                        {iconoPosicion(posicion)}
+                      </p>
 
-  <div className="min-w-0">
-    <p className="font-black text-base sm:text-xl text-green-900 break-words">
-      {usuario.nombre}
-    </p>
+                      <div className="min-w-0">
+                        <p className="font-black text-base sm:text-xl text-green-900 break-words">
+                          {usuario.nombre}
+                        </p>
+                      </div>
 
-    
-  </div>
+                      <div className="text-right">
+                        <p className="text-lg sm:text-3xl font-black text-green-900 leading-none">
+                          {usuario.puntos}
+                        </p>
 
-  <div className="text-right">
-    <p className="text-xl sm:text-3xl font-black text-green-900">
-      {usuario.puntos}
-    </p>
-
-    <p className="text-[10px] sm:text-sm font-bold text-green-700">
-      pts
-    </p>
-  </div>
-</div>
+                        <p className="text-[9px] sm:text-sm font-bold text-green-700 leading-none mt-1">
+                          pts
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 )
               })}
             </div>
