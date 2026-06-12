@@ -120,28 +120,33 @@ export default function PosicionesPage() {
                       posicion
                     )}`}
                   >
-                    <div className="grid grid-cols-[90px_1fr_140px] gap-4 items-center">
-                      <p className="text-3xl font-black text-center">
-                        {iconoPosicion(posicion)}
-                      </p>
+                   <div className="grid grid-cols-[55px_1fr_75px] sm:grid-cols-[90px_1fr_140px] gap-3 items-center">
+  <p className="text-xl sm:text-3xl font-black text-center">
+    {iconoPosicion(posicion)}
+  </p>
 
-                      <div>
-                        <p className="font-black text-xl text-green-900">
-                          {usuario.nombre}
-                        </p>
+  <div className="min-w-0">
+    <p className="font-black text-base sm:text-xl text-green-900 break-words">
+      {usuario.nombre}
+    </p>
 
-                        {posicion <= 3 && (
-                          <p className="text-sm font-black text-yellow-700 mt-1">
-                            Zona de premiación
-                          </p>
-                        )}
-                      </div>
+    {posicion <= 3 && (
+      <p className="text-xs sm:text-sm font-black text-yellow-700 mt-1">
+        Zona de premiación
+      </p>
+    )}
+  </div>
 
-                      <p className="text-3xl font-black text-right text-green-900">
-                        {usuario.puntos} pts
-                      </p>
-                    </div>
-                  </div>
+  <div className="text-right">
+    <p className="text-xl sm:text-3xl font-black text-green-900">
+      {usuario.puntos}
+    </p>
+
+    <p className="text-[10px] sm:text-sm font-bold text-green-700">
+      pts
+    </p>
+  </div>
+</div>
                 )
               })}
             </div>
