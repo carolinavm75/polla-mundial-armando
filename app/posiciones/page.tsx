@@ -100,7 +100,7 @@ export default function PosicionesPage() {
                 </h2>
 
                 <p className="text-gray-700">
-                  Las primeras tres posiciones están en zona de premiación.
+                  Las primeras tres posiciones están en zona de premiación
                 </p>
               </div>
 
@@ -130,11 +130,7 @@ export default function PosicionesPage() {
       {usuario.nombre}
     </p>
 
-    {posicion <= 3 && (
-      <p className="text-xs sm:text-sm font-black text-yellow-700 mt-1">
-        Zona de premiación
-      </p>
-    )}
+    
   </div>
 
   <div className="text-right">
